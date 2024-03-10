@@ -17,8 +17,8 @@
 <body>
     <div class="container mx-auto">
     <div class="max-w-7xl mx-auto ">
-   <div class="mt-5">
-    <a href="{{route('products.create')}}" class="block p-2 max-w-20 rounded-md bg-blue-300 text-center text-white" >Create</a>
+   <div class="my-5">
+    <a href="{{route('articles.create')}}" class="block p-2 max-w-20 rounded-md bg-blue-300 text-center text-white" >Create</a>
    </div>
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -28,17 +28,18 @@
                     ID
                 </th>
                 <th scope="col" class="px-6 py-3">
-                     Name
+                    Title
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Description
+                     Slug
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Status
+                        Context
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Price
+                    Excerpt
                 </th>
+               
                 <th scope="col" class="px-6 py-3">
                     Action
 
@@ -46,37 +47,35 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($products as $product)          
+            @foreach ($articles as $article)          
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{$product->id}}             </th>
+                        {{$article->id}}             </th>
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                <h5 class=" font-semibold">{{$product->name}}   </h5>    
+                <h5 class=" font-semibold">{{$article->title}}   </h5>    
                 </th>
                 <td class="px-6 py-4">
-                    {{$product->description}}        </td>
+                    {{$article->slug}}        </td>
 
-                  
-                    <td class="px-6 py-4`">
-                        <h5 class="text-center {{ $product->status == 0 ? 'bg-green-400' : 'bg-red-400' }} p-1 rounded-md text-white">
-                            {{ $product->status == 0 ? 'Success' : 'Rejected' }}
-                        </h5>
-                    </td>
-                
+                    <td class="px-6 py-4">
+                        {{$article->context}}        </td>
                 <td class="px-6 py-4 text-white">
-                    ${{$product->price}} 
+                    {{$article->excerpt}} 
                 </td>
-                <td class="px-6 py-4 text-white ">
-                    <a href="{{route('products.read',$product->id)}}" class="bg-blue-400 mb-2 p-2 rounded-md ">Read</a>
-                    <a  href="{{route('products.edit',$product->id)}}" class="bg-green-400 mb-2  p-2 rounded-md ">Edit</a>
-                    <form action="">
-                        <button class="bg-red-500 p-2 text-white rounded-md" >Delete</button>
-                    </form>
+                <td class="px-6 py-4 flex justify-center items-center gap-4    text-white ">
+                    
+                    <a href="{{route('articles.edit',$article->id)}}" class="bg-blue-300 p-2 rounded-md">Edit</a>
+                    
+                        <form action="{{route('articles.destroy',$article->id)}}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="bg-red-500 p-2 text-white rounded-md" >Delete</button>
+                        </form>                    
+                  
                 </td>         
             </tr>
             @endforeach 
-            <div class="my-3">
-            </div>
+          
         </tbody>
     </table>
 </div>

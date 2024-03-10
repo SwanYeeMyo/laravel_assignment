@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Article\ArticleController;
 use App\Http\Controllers\productController\ProductController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -26,3 +27,4 @@ Route::group(['prefix' => 'products'], function () {
     Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::post('/id/{id}/update', [ProductController::class, 'update'])->name('products.update');
 });
+Route::resource('articles',ArticleController::class);
