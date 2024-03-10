@@ -20,7 +20,7 @@
     <div class="container mx-auto">
         <div class="max-w-7xl mx-auto ">
 
-            <form action="{{route('products.update',$product->id)}}" class="max-w-md mt-36 mx-auto bg-white shadow-md p-5">
+            <form action="{{route('products.update',$product->id)}}" method="POST" class="max-w-md mt-36 mx-auto bg-white shadow-md p-5">
                 @csrf
                 <h5 class="mb-3 ">Update New Product </h5>
                 <div class="mb-5">
