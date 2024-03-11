@@ -23,12 +23,13 @@ class StorePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string',],
+            'title' => ['required', 'string'],
             'slug' => [
                 'required',
                 'string',
                 Rule::unique('articles')->ignore($this->route('article')) // Assuming route model binding
-            ],            'context' => ['required', 'string'],
+            ],  
+            'context' => ['required', 'string'],
             'excerpt' => ['required', 'string']
 
         ];
