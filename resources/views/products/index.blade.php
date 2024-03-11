@@ -67,11 +67,13 @@
                     ${{$product->price}} 
                 </td>
                 <td class="px-6 py-4 text-white ">
-                    <a href="{{route('products.read',$product->id)}}" class="bg-blue-400 mb-2 p-2 rounded-md ">Read</a>
+                    <div class="flex justify-center item-center gap-2">
+                        <a href="{{route('products.read',$product->id)}}" class="bg-blue-400 mb-2 p-2 rounded-md ">Read</a>
                     <a  href="{{route('products.edit',$product->id)}}" class="bg-green-400 mb-2  p-2 rounded-md ">Edit</a>
                     <form action="">
                         <button class="bg-red-500 p-2 text-white rounded-md" >Delete</button>
                     </form>
+                    </div>
                 </td>         
             </tr>
             @endforeach 
