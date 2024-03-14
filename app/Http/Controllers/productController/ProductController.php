@@ -3,46 +3,67 @@
 namespace App\Http\Controllers\productController;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Product\StorePostRequest;
+use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $products = Product::all();
-        return view('products.index',compact('products'));
+        return view('products.index', compact('products'));
     }
-    public function create(){
+    public function create()
+    {
         return view('products.create');
     }
-    public function store(Request $request){
-        // dd($request->all());
-        Product::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'status' => $request->status,
-            'price' => $request->price
-        ]);
+    public function store(Request $request)
+    {
+        // dd($request->file('image'));
+        $product = new Product;
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->status = $request->status;
+        $product->price = $request->price;
+        $product->save();
+       
+        foreach ($request->file('image') as $img) {
+            $imgName =  uniqid() .'.'. $img->getClientOriginalExtension();
+            $img->storeAs('public/img',$imgName);
+            $image = new Image;
+            $image->img_name = $imgName;
+            $image->product_id = $product->id;
+            $image->save();
+        }
         return redirect()->route('products.index');
-
     }
-    public function read($id){
-        $product = Product::where('id',$id)->first();
-        return view('products.read',compact('product'));
+    public function read($id)
+    { 
+        $product = Product::where('id', $id)->first();
+        return view('products.read', compact('product'));
     }
-    public function edit($id){
+    public function edit($id)
+    {
         $product = Product::find($id);
         // dd($product);
-        return view('products.edit',compact('product'));
+        return view('products.edit', compact('product'));
     }
-    public function update(Request $request , $id){
+    public function update(Request $request, $id)
+    {
         $product = Product::find($id);
         $product->update([
             'name' => $request->name,
             'description' => $request->description,
             'status' => $request->status,
-            'price' =>$request->price,
+            'price' => $request->price,
         ]);
+        return redirect()->route('products.index');
+    }
+    public function destroy($id)
+    {
+        Product::where('id', $id)->delete();
         return redirect()->route('products.index');
     }
 }
