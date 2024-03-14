@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Article\ArticleController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\productController\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Users\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('/articles',ArticleController::class);
     Route::get('prodoucts/read/{id}',[ProductController::class,'read'])->name('products.read');
     Route::resource('products',ProductController::class);
+    // Route::resource('/users',[UserController::class]);
+    Route::resource('/users',UserController::class);
+    Route::post('users/createTable',[RegisteredUserController::class,'store'])->name('customUser.store');
 });
 
 require __DIR__.'/auth.php';

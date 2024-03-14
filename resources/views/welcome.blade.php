@@ -18,7 +18,7 @@
     <h3 class="text-center bg-slate-400">This is laravel with Tailwind Css .</h3>
     <div class="flex justify-center items-center">
         <a href="{{route('login')}}">Login</a>
-        <a href="{{route('register')}}">Register</a>
+        {{-- <a href="{{route('register')}}">Register</a> --}}
 
     </div>
 </body>

@@ -22,10 +22,12 @@ class StorePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required','string'],
-            'description' => ['required','string'],
-            'image' => ['required','image'],
+            'name' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'image' => ['required','array'],
+            'image.*' => ['mimes:jpeg,png,jpg,gif'],
             'price' => ['required']
         ];
     }
 }
+// 'image.*' => akhan 3 khan shi yin a kone sit ml so tae mean

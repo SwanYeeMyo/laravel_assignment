@@ -12,15 +12,17 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        // $products = Product::all();
+        $products = Product::with('images')->get();
         return view('products.index', compact('products'));
     }
     public function create()
     {
         return view('products.create');
     }
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
+        // dd($request->all());
         // dd($request->file('image'));
         $product = new Product;
         $product->name = $request->name;

@@ -29,7 +29,7 @@ class StorePostRequest extends FormRequest
                 'string',
                 Rule::unique('articles')->ignore($this->route('article')) // Assuming route model binding
             ],  
-            'image' => ['required','file','mimes:jpeg,png,gif,svg'],
+            'image' => ['required','image','mimes:jpeg,png,gif,svg'],
             'context' => ['required', 'string'],
             'excerpt' => ['required', 'string']
 
