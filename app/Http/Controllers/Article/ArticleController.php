@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Article;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdateDataRequest;
 use App\Models\Article;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -32,11 +33,16 @@ class ArticleController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-
+        
+        // dd($request->all());
+        $imageName = time() . '.' .$request->image->getClientOriginalExtension();
+        $request->image->storeAs('public/',$imageName);
+        // dd($imageName);
             Article::create([
                 'title' => $request->title,
                 'slug' => $request->slug,
                 'context' => $request->context,
+                'image' => $imageName,
                 'excerpt' => $request->excerpt,
 
             ]);
@@ -64,12 +70,14 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StorePostRequest $request, string $id)
+    public function update(UpdateDataRequest $request, string $id)
     {
         //
+        $article = Article::find($id)->first();
         Article::where('id',$id)->update([
             'title' => $request->title,
             'slug' => $request->slug,
+            'image' => $article->image,
             'context' => $request->context,
             'excerpt' => $request->excerpt,
 
