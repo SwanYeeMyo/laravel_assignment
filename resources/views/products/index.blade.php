@@ -75,7 +75,7 @@
                                     </td>
                                     <td
                                             class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                            <p class="mb-0 text-xs font-semibold leading-tight  dark:opacity-80">
+                                            <p class="text-center mb-0 text-xs font-semibold leading-tight  dark:opacity-80">
                                                 {{ $product->price }}</p>
                                         </td>
                                         <td
@@ -83,9 +83,10 @@
                                             <div class="flex justify-center items-center">
                                        
                                             @foreach ($product->images as $img )
-                                            <img class="w-10 " src="{{asset('storage/img/' . $img->img_name)}}" alt="{{$img->img_name}}">
+                                            <img class="w-20   " src={{asset('storage/img/' . $img->img_name)}} alt="{{$img->img_name}}">
 
                                         @endforeach
+                                        
                                     </div>
 
                                         </td>
@@ -100,6 +101,7 @@
                                               
                                         </td>
                                         <form action="{{ route('products.destroy', $product->id) }}" method="POST">
+                                            @csrf
                                             @method('DELETE')
                                         <td
                                             class="p-2 text-center  bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
