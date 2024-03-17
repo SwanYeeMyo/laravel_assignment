@@ -73,6 +73,22 @@
             </a>
           </li> --}}
           <li class="mt-0.5 w-full">
+            <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="{{route('roles.index')}}">
+              <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                <i class="relative top-0 text-sm leading-normal text-cyan-500 ni ni-collection"></i>
+              </div>
+              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Roles</span>
+            </a>
+          </li>
+          <li class="mt-0.5 w-full">
+            <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="{{route('permissions.index')}}">
+              <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                <i class="relative top-0 text-sm leading-normal text-cyan-500 ni ni-collection"></i>
+              </div>
+              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Permissions</span>
+            </a>
+          </li>
+          <li class="mt-0.5 w-full">
             <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="{{route('users.index')}}">
               <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
                 <i class="relative top-0 text-sm leading-normal text-orange-500 ni ni-calendar-grid-58"></i>
@@ -101,14 +117,7 @@
             </a>
           </li>
 
-          <li class="mt-0.5 w-full">
-            <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="./pages/sign-up.html">
-              <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
-                <i class="relative top-0 text-sm leading-normal text-cyan-500 ni ni-collection"></i>
-              </div>
-              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Sign Up</span>
-            </a>
-          </li>
+        
         </ul>
       </div>
 
@@ -158,6 +167,7 @@
                 <a href="./pages/sign-in.html" class="block px-0 py-2 text-sm font-semibold text-white transition-all ease-nav-brand">
                   <i class="fa fa-user sm:mr-1"></i>
                   {{Auth::user()->name}}
+                  
                   {{-- <span class=" sm:inline"{{ Auth::user() }}</span> --}}
                 </a>
               </li>
@@ -179,7 +189,7 @@
 
               <!-- notifications -->
 
-              <li class="relative flex items-center pr-2">
+              {{-- <li class="relative flex items-center pr-2">
                 <p class="hidden transform-dropdown-show"></p>
                 <a href="javascript:;" class="block p-0 text-sm text-white transition-all ease-nav-brand" dropdown-trigger aria-expanded="false">
                   <i class="cursor-pointer fa fa-bell"></i>
@@ -250,7 +260,7 @@
                     </a>
                   </li>
                 </ul>
-              </li>
+              </li> --}}
             </ul>
           </div>
         </div>
