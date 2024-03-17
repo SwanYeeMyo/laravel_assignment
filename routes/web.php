@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Article\ArticleController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\productController\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Users\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +38,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('products',ProductController::class);
     // Route::resource('/users',[UserController::class]);
     Route::resource('/users',UserController::class);
-    Route::post('users/createTable',[RegisteredUserController::class,'store'])->name('customUser.store');
+    Route::resource('roles',RoleController::class);
+    Route::resource('permissions',PermissionController::class);
+
+    // Route::post('users/createTable',[RegisteredUserController::class,'store'])->name('customUser.store');
+
+ // Route::get('register', [RegisteredUserController::class, 'create'])
+    //             ->name('register');
 });
 
 require __DIR__.'/auth.php';

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
     <div class="flex flex-wrap mt-6 mx-3">
-        <form action="{{ route('customUser.store') }}" method="POST" class="w-full  mt-10  bg-white shadow-md p-5">
+        <form action="{{ route('users.store') }}" method="POST" class="w-full  mt-10  bg-white shadow-md p-5">
             @csrf
             <h5 class="mb-3 ">Create New User </h5>
             <div class="mb-5">
