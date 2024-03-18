@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateDataRequest;
 use App\Models\Article;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ArticleController extends Controller
 {
@@ -16,6 +17,9 @@ class ArticleController extends Controller
      */
     public function index()
     {
+        if(!Gate::allows('article_list')){
+            abort(401);
+        }
         $articles = Article::all();
         return view('article.index',compact('articles'));
     }
@@ -25,6 +29,9 @@ class ArticleController extends Controller
      */
     public function create()
     {
+        if(!Gate::allows('article_create')){
+            abort(401);
+        }
         return view('article.create');
     }
 
@@ -33,7 +40,9 @@ class ArticleController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        
+        if(!Gate::allows('article_store')){
+            abort(401);
+        }
         // dd($request->all());
         $imageName = time() . '.' .$request->image->getClientOriginalExtension();
         $request->image->storeAs('public/',$imageName);
@@ -63,6 +72,9 @@ class ArticleController extends Controller
      */
     public function edit(string $id)
     {
+        if(!Gate::allows('article_edit')){
+            abort(401);
+        }
         $article = Article::where('id',$id)->first();
         return view('article.edit',compact('article'));
     }
@@ -73,6 +85,9 @@ class ArticleController extends Controller
     public function update(UpdateDataRequest $request, string $id)
     {
         //
+        if(!Gate::allows('article_update')){
+            abort(401);
+        }
         $article = Article::find($id)->first();
         Article::where('id',$id)->update([
             'title' => $request->title,
@@ -93,6 +108,9 @@ class ArticleController extends Controller
     public function destroy(string $id)
     {
         //
+        if(!Gate::allows('article_destory')){
+            abort(401);
+        }
         Article::where('id',$id)->delete();
         return redirect()->route('articles.index');
     }

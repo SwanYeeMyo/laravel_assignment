@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
@@ -13,6 +14,9 @@ class PermissionController extends Controller
     public function index()
     {
         //
+        if(!Gate::allows('permission_list')){
+            abort(401);
+        }
         $permissions = Permission::all();
         return view('permissions.index',compact('permissions'));
     }
@@ -23,6 +27,9 @@ class PermissionController extends Controller
     public function create()
     {
         //
+        if(!Gate::allows('permission_create')){
+            abort(401);
+        }
         return view('permissions.create');
     }
 
@@ -33,6 +40,9 @@ class PermissionController extends Controller
     {
         //
         // dd($request->all());
+        if(!Gate::allows('permission_store')){
+            abort(401);
+        }
         $request->validate([
             'permission' => ['required']
         ]);
@@ -56,6 +66,9 @@ class PermissionController extends Controller
     public function edit(string $id)
     {
         //
+        if(!Gate::allows('permission_edit')){
+            abort(401);
+        }
         $permission = Permission::where('id',$id)->first();
         return view('permissions.edit',compact('permission'));
     }
@@ -66,6 +79,9 @@ class PermissionController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        if(!Gate::allows('permission_update')){
+            abort(401);
+        }
         $request->validate([
             'permission' => ['required']
         ]) ;
@@ -81,6 +97,9 @@ class PermissionController extends Controller
     public function destroy(string $id)
     {
         //
+        if(!Gate::allows('permission_destory')){
+            abort(401);
+        }
         Permission::where('id',$id)->delete();
         return redirect()->route('permissions.index');
     }

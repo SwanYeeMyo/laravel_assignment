@@ -55,14 +55,16 @@
       <div class="items-center block w-auto max-h-screen overflow-auto h-sidenav grow basis-full">
         <ul class="flex flex-col pl-0 mb-0">
       
-          <li class="mt-0.5 w-full">
-            <a class="py-2.7 bg-blue-500/13 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold text-slate-700 transition-colors" href="{{route('dashboard')}}">
-              <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
-                <i class="relative top-0 text-sm leading-normal text-blue-500 ni ni-tv-2"></i>
-              </div>
-              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Dashboard</span>
-            </a>
-          </li>
+         @can('dashboard')
+         <li class="mt-0.5 w-full">
+          <a class="py-2.7 bg-blue-500/13 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold text-slate-700 transition-colors" href="{{route('dashboard')}}">
+            <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+              <i class="relative top-0 text-sm leading-normal text-blue-500 ni ni-tv-2"></i>
+            </div>
+            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Dashboard</span>
+          </a>
+        </li>
+         @endcan
 
           {{-- <li class="mt-0.5 w-full">
             <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="./pages/tables.html">
@@ -72,6 +74,7 @@
               <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Tables</span>
             </a>
           </li> --}}
+          @can('role_list')
           <li class="mt-0.5 w-full">
             <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="{{route('roles.index')}}">
               <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
@@ -80,6 +83,8 @@
               <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Roles</span>
             </a>
           </li>
+          @endcan
+          @can('permission_list')
           <li class="mt-0.5 w-full">
             <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="{{route('permissions.index')}}">
               <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
@@ -88,6 +93,8 @@
               <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Permissions</span>
             </a>
           </li>
+          @endcan
+          @can('user_list')
           <li class="mt-0.5 w-full">
             <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="{{route('users.index')}}">
               <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
@@ -96,9 +103,8 @@
               <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Users</span>
             </a>
           </li>
-
-          
-
+          @endcan
+          @can('article_list')
           <li class="mt-0.5 w-full">
             <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="{{route('articles.index')}}">
               <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
@@ -107,6 +113,8 @@
               <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Articles</span>
             </a>
           </li>
+          @endcan
+        
 
           <li class="mt-0.5 w-full">
             <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors" href="{{route('products.index')}}">
