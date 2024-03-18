@@ -25,7 +25,7 @@
                     <h5>Current Permissions</h5>
                     @foreach ($role->permissions as $permission)
                         <span
-                            class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300"> {{$permission->id}} .{{ $permission->name }}</span>
+                            class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300"> {{ $permission->name }}</span>
                     @endforeach
                 </div>
                 <div class="mb-5">
