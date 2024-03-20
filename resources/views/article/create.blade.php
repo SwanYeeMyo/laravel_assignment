@@ -55,6 +55,7 @@
                         </div>
                         <input name="image" id="dropzone-file" type="file" class="hidden" />
                     </label>
+                    {{-- <input type="file" name="image" class="form-control"> --}}
                     
                 </div>
                 @error('image')

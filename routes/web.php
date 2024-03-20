@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Article\ArticleController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\productController\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -40,6 +41,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/users',UserController::class);
     Route::resource('roles',RoleController::class);
     Route::resource('permissions',PermissionController::class);
+    Route::resource('employees',EmployeeController::class);
+    Route::get('article/search',[ArticleController::class,'search'])->name('articles.search');
 
     // Route::post('users/createTable',[RegisteredUserController::class,'store'])->name('customUser.store');
 

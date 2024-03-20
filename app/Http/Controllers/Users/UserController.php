@@ -35,7 +35,8 @@ class UserController extends Controller
         if(!Gate::allows('user_create')){
             abort(401);
         }
-        $roles = Role::all();
+        $roles = Role::with('roles')->get();
+        
         return view('users.create',compact('roles'));
     }
 

@@ -7,6 +7,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdateDataRequest;
 use App\Models\Article;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -15,21 +16,31 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        if(!Gate::allows('article_list')){
+        if (!Gate::allows('article_list')) {
             abort(401);
         }
-        $articles = Article::all();
-        return view('article.index',compact('articles'));
-    }
+        $articles = Article::paginate(3);
 
+        return view('article.index', compact('articles'));
+    }
+    public function search(Request $request)
+    {
+        // dd($request->all());
+        // $articles = Article::whereBetween('created_at',[$request->start_date,$request->end_date])->paginate(1);
+        // $articles = Article::whereDate('created_at', '>=', $request->start_date)
+        //     ->whereDate('created_at', '<=', $request->end_date)
+        //     ->paginate(10);
+        // dd($articles);
+        // return view('article.index', compact('articles'));
+    }
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        if(!Gate::allows('article_create')){
+        if (!Gate::allows('article_create')) {
             abort(401);
         }
         return view('article.create');
@@ -40,22 +51,22 @@ class ArticleController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        if(!Gate::allows('article_store')){
+        if (!Gate::allows('article_store')) {
             abort(401);
         }
         // dd($request->all());
-        $imageName = time() . '.' .$request->image->getClientOriginalExtension();
-        $request->image->storeAs('public/',$imageName);
+        $imageName = time() . '.' . $request->image->getClientOriginalExtension();
+        $request->image->storeAs('public/', $imageName);
         // dd($imageName);
-            Article::create([
-                'title' => $request->title,
-                'slug' => $request->slug,
-                'context' => $request->context,
-                'image' => $imageName,
-                'excerpt' => $request->excerpt,
+        Article::create([
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'context' => $request->context,
+            'image' => $imageName,
+            'excerpt' => $request->excerpt,
 
-            ]);
-            return redirect()->route('articles.index');
+        ]);
+        return redirect()->route('articles.index');
     }
 
     /**
@@ -64,7 +75,7 @@ class ArticleController extends Controller
     public function show(string $id)
     {
         //
-       
+
     }
 
     /**
@@ -72,11 +83,11 @@ class ArticleController extends Controller
      */
     public function edit(string $id)
     {
-        if(!Gate::allows('article_edit')){
+        if (!Gate::allows('article_edit')) {
             abort(401);
         }
-        $article = Article::where('id',$id)->first();
-        return view('article.edit',compact('article'));
+        $article = Article::where('id', $id)->first();
+        return view('article.edit', compact('article'));
     }
 
     /**
@@ -85,11 +96,11 @@ class ArticleController extends Controller
     public function update(UpdateDataRequest $request, string $id)
     {
         //
-        if(!Gate::allows('article_update')){
+        if (!Gate::allows('article_update')) {
             abort(401);
         }
         $article = Article::find($id)->first();
-        Article::where('id',$id)->update([
+        Article::where('id', $id)->update([
             'title' => $request->title,
             'slug' => $request->slug,
             'image' => $article->image,
@@ -98,8 +109,6 @@ class ArticleController extends Controller
 
         ]);
         return redirect()->route('articles.index');
-
-
     }
 
     /**
@@ -108,10 +117,10 @@ class ArticleController extends Controller
     public function destroy(string $id)
     {
         //
-        if(!Gate::allows('article_destory')){
+        if (!Gate::allows('article_destory')) {
             abort(401);
         }
-        Article::where('id',$id)->delete();
+        Article::where('id', $id)->delete();
         return redirect()->route('articles.index');
     }
 }

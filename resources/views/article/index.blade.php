@@ -6,13 +6,33 @@
         <div class="flex-none w-full max-w-full px-3">
             <div
                 class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
-                <div class="mb-3 flex items-center justify-between p-6 pb-0  border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
+                <div
+                    class="mb-3 flex items-center justify-between p-6 pb-0  border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
                     <h6 class="">Articles table</h6>
                     <h5>
-                    <a class="p-2 bg-blue-300 text-white rounded-md " href="{{route('articles.create')}}">Create table</a>
-
+                        <a class="p-2 bg-blue-300 text-white rounded-md " href="{{ route('articles.create') }}">Create
+                            table</a>
                     </h5>
                 </div>
+                <form action="{{route('articles.search')}}" method="GET">
+                    <div class="flex justify-between items-center p-2">
+                        <div class="flex gap-5">
+                            <div>
+
+                                <label for="">Start Date :</label>
+                                <input type="date" name="start_date" class="form-control">
+
+                            </div>
+                            <div>
+                                <label for="">End Date :</label>
+                                <input type="date" name="end_date" class="form-control">
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit" class="bg-blue-400 p-2 text-white">Search</button>
+                        </div>
+                    </div>
+                </form>
                 <div class="flex-auto px-0 pt-0 pb-2">
                     <div class="p-0 overflow-x-auto">
                         <table
@@ -37,6 +57,9 @@
                                     <th
                                         class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                         excerpt</th>
+                                    <th
+                                        class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Date</th>
                                     <th colspan="2"
                                         class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                         action</th>
@@ -72,8 +95,9 @@
                                         <td
                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
                                             <span
-                                                class="text-xs font-semibold leading-tight  dark:opacity-80 text-slate-400">     {{ Str::limit($article->context, 40) }}
-                                                </span>
+                                                class="text-xs font-semibold leading-tight  dark:opacity-80 text-slate-400">
+                                                {{ Str::limit($article->context, 40) }}
+                                            </span>
                                         </td>
                                         <td
                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
@@ -85,7 +109,12 @@
                                         <td
                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
                                             <span
-                                                class="text-xs font-semibold leading-tight  dark:opacity-80 text-slate-400">{{ Str::limit($article->excerpt,40) }}</span>
+                                                class="text-xs font-semibold leading-tight  dark:opacity-80 text-slate-400">{{ Str::limit($article->excerpt, 40) }}</span>
+                                        </td>
+                                        <td
+                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                            <span
+                                                class="text-xs font-semibold leading-tight  dark:opacity-80 text-slate-400">{{ date('d-m-Y', strtotime($article->created_at)) }}</span>
                                         </td>
                                         <td
                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent ">
@@ -94,11 +123,11 @@
                                         </td>
                                         <form action="{{ route('articles.destroy', $article->id) }}" method="POST">
                                             @method('DELETE')
-                                        <td
-                                            class="p-2 text-center  bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                            <button class="text-white bg-red-500 rounded-md p-2" >Delete</button>
-                                        </td>
-                                    </form>
+                                            <td
+                                                class="p-2 text-center  bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                <button class="text-white bg-red-500 rounded-md p-2">Delete</button>
+                                            </td>
+                                        </form>
 
                                     </tr>
                                 @endforeach
@@ -106,6 +135,9 @@
 
                             </tbody>
                         </table>
+                        <div class="my-3 P-2">
+                        {{$articles->links()}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -113,90 +145,7 @@
     </div>
 @endsection
 
-{{-- <div class="container mx-auto">
-        <div class="max-w-7xl mx-auto ">
-            <div class="my-5">
-                <a href="{{ route('articles.create') }}"
-                    class="block p-2 max-w-20 rounded-md bg-blue-300 text-center text-white">Create</a>
-            </div>
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">
-                                ID
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Title
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Slug
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Context
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Image
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Excerpt
-                            </th>
-
-                            <th scope="col" class="px-6 py-3">
-                                Action
-
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($articles as $article)
-                            <tr
-                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                    {{ $article->id }} </th>
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                    <h5 class=" font-semibold">{{ $article->title }} </h5>
-                                </th>
-                                <td class="px-6 py-4">
-                                    {{ $article->slug }} </td>
-
-                                <td class="px-6 py-4">
-                                    {{ $article->context }} </td>
-
-                                    <td class="px-6 py-4">
-                                        <img class="w-32 rounded-md" src="{{ asset('storage/' . $article->image) }}" alt="Image">
-
-                                    </td>
-
-                                <td class="px-6 py-4 text-white">
-                                    {{ $article->excerpt }}
-                                </td>
-                                <td class="px-6 py-4   text-white ">
-                                    <div class="flex justify-center items-center gap-2">
-                                        <a href="{{ route('articles.edit', $article->id) }}"
-                                            class="bg-blue-300 p-2 rounded-md">Edit</a>
-
-                                        <form action="{{ route('articles.destroy', $article->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="bg-red-500 p-2 text-white rounded-md">Delete</button>
-                                        </form>
-                                    </div>
 
 
-                                </td>
-                            </tr>
-                        @endforeach
-
-                    </tbody>
-                </table>
-            </div>
-
-
-        </div>
-    </div> --}}
-</body>
 
 </html>

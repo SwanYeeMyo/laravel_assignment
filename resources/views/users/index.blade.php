@@ -26,6 +26,9 @@
                                 <th
                                     class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                     Emailll</th>
+                                    <th
+                                    class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                    Role</th>
                                 {{-- <th
                                     class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40  text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                     Password</th> --}}
@@ -61,6 +64,14 @@
                                         <p class="mb-0 text-xs font-semibold leading-tight  dark:opacity-80">
                                             {{ $user->email }}</p>
                                     </td>
+                                    <td
+                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                    
+                                        <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
+                                            {{$user->roles[0]['name']}}
+                                        </span>
+
+                                </td>
 
                                    
                                     
