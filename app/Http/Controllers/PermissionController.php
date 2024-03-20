@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Repositories\Permission\PermissionRepositoryInterface;
+use App\Http\Requests\PermissionRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Permission;
@@ -11,13 +13,18 @@ class PermissionController extends Controller
     /**
      * Display a listing of the resource.
      */
+    protected $repository;
+    public function __construct(PermissionRepositoryInterface $repository)
+    {
+        $this->repository = $repository;
+    }
     public function index()
     {
         //
         if(!Gate::allows('permission_list')){
             abort(401);
         }
-        $permissions = Permission::all();
+        $permissions = $this->repository->index();
         return view('permissions.index',compact('permissions'));
     }
 
@@ -36,19 +43,16 @@ class PermissionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PermissionRequest $request)
     {
         //
         // dd($request->all());
         if(!Gate::allows('permission_store')){
             abort(401);
         }
-        $request->validate([
-            'permission' => ['required']
-        ]);
-        Permission::create([
-            'name' => $request->permission
-        ]);
+       
+        $this->repository->store($request->validated());
+       
         return redirect()->route('permissions.index');
     }
 
@@ -69,6 +73,7 @@ class PermissionController extends Controller
         if(!Gate::allows('permission_edit')){
             abort(401);
         }
+        
         $permission = Permission::where('id',$id)->first();
         return view('permissions.edit',compact('permission'));
     }
@@ -76,18 +81,14 @@ class PermissionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PermissionRequest $request, string $id)
     {
         //
         if(!Gate::allows('permission_update')){
             abort(401);
         }
-        $request->validate([
-            'permission' => ['required']
-        ]) ;
-        Permission::where('id',$id)->update([
-            'name' => $request->permission
-        ]);
+        
+        $this->repository->update($request->validated(),$id);
         return redirect()->route('permissions.index');
     }
 
