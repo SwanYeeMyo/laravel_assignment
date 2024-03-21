@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
+use App\Http\Repositories\User\UserRepositoryInterface;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -17,12 +19,17 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
+    private $repository;
+    public function __construct(UserRepositoryInterface $repository)
+    {
+        $this->repository = $repository;   
+    }
     public function index()
     {
         if(!Gate::allows('user_list')){
             abort(401);
         }
-        $users = User::with('roles')->get();
+        $users = $this->repository->index();
         return view('users.index',compact('users'));
     }
 
@@ -35,7 +42,7 @@ class UserController extends Controller
         if(!Gate::allows('user_create')){
             abort(401);
         }
-        $roles = Role::with('roles')->get();
+        $roles = $this->repository->create();
         
         return view('users.create',compact('roles'));
     }
@@ -44,25 +51,14 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      */
     
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         //
         if(!Gate::allows('user_store')){
             abort(401);
         }
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', RulesPassword::defaults()],
-            'role_id' => ['required','integer','min:1']
-        ]);
-        $role = Role::where('id',$request->role_id)->first();
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-        $user->assignRole($role);
+        $this->repository->store($request->all());
+        
         return redirect()->route('users.index');
     }
 
@@ -83,7 +79,7 @@ class UserController extends Controller
         if(!Gate::allows('user_edit')){
             abort(401);
         }
-        $user = User::where('id',$id)->first();
+        $user = $this->repository->edit($id);
         return view('users.edit',compact('user'));
     }
 
@@ -93,6 +89,9 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $data = $this->repository->update($request->all(),$id);
+        dd($data);
+        return redirect()->route('users.index');
     }
 
     /**
@@ -103,7 +102,7 @@ class UserController extends Controller
         if(!Gate::allows('user_destory')){
             abort(401);
         }
-        User::where('id',$id)->delete();
+        $this->repository->destory($id);
         // return view('users.index');
         return redirect()->route('users.index');
     }
