@@ -21,6 +21,7 @@ class ArticleController extends Controller
         if (!Gate::allows('article_list')) {
             abort(401);
         }
+        
         $articles = Article::paginate(3);
 
         return view('article.index', compact('articles'));
@@ -28,12 +29,9 @@ class ArticleController extends Controller
     public function search(Request $request)
     {
         // dd($request->all());
-        // $articles = Article::whereBetween('created_at',[$request->start_date,$request->end_date])->paginate(1);
-        // $articles = Article::whereDate('created_at', '>=', $request->start_date)
-        //     ->whereDate('created_at', '<=', $request->end_date)
-        //     ->paginate(10);
-        // dd($articles);
-        // return view('article.index', compact('articles'));
+        $articles = Article::whereBetween('created_at',[$request->start_date . '00:00:00',$request->end_date . '23:59:59'])->paginate(1);
+       
+        return view('article.index', compact('articles'));
     }
     /**
      * Show the form for creating a new resource.

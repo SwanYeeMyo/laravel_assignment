@@ -13,6 +13,7 @@ class RoleRepository implements RoleRepositoryInterface{
     }
 
     public function store($params){
+        // dd($params);
         $role = Role::create([
             'name' => $params['role']
         ]);

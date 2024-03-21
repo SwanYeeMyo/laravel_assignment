@@ -15,17 +15,18 @@
                     </h5>
                 </div>
                 <form action="{{route('articles.search')}}" method="GET">
+                    @csrf
                     <div class="flex justify-between items-center p-2">
                         <div class="flex gap-5">
                             <div>
 
                                 <label for="">Start Date :</label>
-                                <input type="date" name="start_date" class="form-control">
+                                <input type="datetime-local" name="start_date" class="form-control">
 
                             </div>
                             <div>
                                 <label for="">End Date :</label>
-                                <input type="date" name="end_date" class="form-control">
+                                <input type="datetime-local" name="end_date" class="form-control">
                             </div>
                         </div>
                         <div>
