@@ -24,12 +24,13 @@ class ProductController extends Controller
     {
         // dd($request->all());
         // dd($request->file('image'));
-        $product = new Product;
-        $product->name = $request->name;
-        $product->description = $request->description;
-        $product->status = $request->status;
-        $product->price = $request->price;
-        $product->save();
+        // $product = new Product;
+        // $product->name = $request->name;
+        // $product->description = $request->description;
+        // $product->status = $request->status;
+        // $product->price = $request->price;
+        // $product->save();
+        $product = Product::create($request->validated());
        
         foreach ($request->file('image') as $img) {
             $imgName =  uniqid() .'.'. $img->getClientOriginalExtension();
@@ -39,7 +40,7 @@ class ProductController extends Controller
             $image->product_id = $product->id;
             $image->save();
         }
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->with('success','Created Successfully');
     }
     public function read($id)
     { 
@@ -61,11 +62,11 @@ class ProductController extends Controller
             'status' => $request->status,
             'price' => $request->price,
         ]);
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->with('success','Updated Successfully');
     }
     public function destroy($id)
     {
         Product::where('id', $id)->delete();
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->with('success','Delete Successfully');
     }
 }

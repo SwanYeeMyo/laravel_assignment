@@ -70,9 +70,10 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $id)
     {
         //
+        // dd($request->all());
         $user = $this->repository->update($request->all(),$id);
         return response()->json([
             'status' => 'success',

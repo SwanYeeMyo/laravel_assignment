@@ -55,7 +55,7 @@ class RoleController extends Controller
         }
         
         $this->repository->store($request->validated());
-        return redirect()->route('roles.index');
+        return redirect()->route('roles.index')->with('success','Role Created Success.');
     }
 
     /**
@@ -97,7 +97,7 @@ class RoleController extends Controller
         $this->repository->update($request,$id);
         
     
-        return redirect()->route('roles.index');
+        return redirect()->route('roles.index')->with('success','Updated Successfully');
     
     }
 
@@ -111,6 +111,6 @@ class RoleController extends Controller
             abort(401);
         }
         $this->repository->destory($id);
-        return redirect()->route('roles.index');
+        return redirect()->route('roles.index')->with('success','Deleted');
     }
 }
