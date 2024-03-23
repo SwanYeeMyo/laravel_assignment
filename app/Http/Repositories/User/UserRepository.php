@@ -29,22 +29,24 @@ class UserRepository implements UserRepositoryInterface
     }
     public function edit($id)
     {
-        return User::where('id',$id)->first();
-        
+        return User::where('id', $id)->first();
     }
-    public function update($params,$id){
-        // dd($params);
-        return User::where('id',$id)->update(
-            [
-                'name' => $params['name'],
-                'email' => $params['email'],
-                // 'password' => Hash::make($params['password'])
-            ]
+    public function update($params, $id)
+    {
+        // dd('This is Here ');
+        $user = User::where('id', $id)->first();
+        if ($user) {
+            return User::where('id', $id)->update(
+                [
+                    'name' => $params['name'],
+                    'email' => $params['email'],
+                    // 'password' => Hash::make($params['password'])
+                ]
             );
+        }
     }
     public function destory($id)
     {
-        return User::where('id',$id)->delete();
-        
+        return User::where('id', $id)->delete();
     }
 }

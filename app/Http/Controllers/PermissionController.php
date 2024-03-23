@@ -53,7 +53,7 @@ class PermissionController extends Controller
        
         $this->repository->store($request->validated());
        
-        return redirect()->route('permissions.index');
+        return redirect()->route('permissions.index')->with('success','Created Successfully');
     }
 
     /**
@@ -89,7 +89,7 @@ class PermissionController extends Controller
         }
         
         $this->repository->update($request->validated(),$id);
-        return redirect()->route('permissions.index');
+        return redirect()->route('permissions.index')->with('success','Updated Successfully');
     }
 
     /**
@@ -102,6 +102,6 @@ class PermissionController extends Controller
             abort(401);
         }
         Permission::where('id',$id)->delete();
-        return redirect()->route('permissions.index');
+        return redirect()->route('permissions.index')->with('success','Delete Successfully');
     }
 }

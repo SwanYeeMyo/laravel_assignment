@@ -59,7 +59,7 @@ class UserController extends Controller
         }
         $this->repository->store($request->all());
         
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success','Created Successfully');
     }
 
     /**
@@ -90,8 +90,8 @@ class UserController extends Controller
     {
         //
         $data = $this->repository->update($request->all(),$id);
-        dd($data);
-        return redirect()->route('users.index');
+        // dd($data);
+        return redirect()->route('users.index')->with('success','updated Successfully');
     }
 
     /**
@@ -104,6 +104,6 @@ class UserController extends Controller
         }
         $this->repository->destory($id);
         // return view('users.index');
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success','Deleted Successfully');
     }
 }
